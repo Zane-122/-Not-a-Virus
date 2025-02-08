@@ -9,6 +9,7 @@ import java.util.Random;
 public class UsernameScreen extends Screen {
     @Override
     public void constructWindow(JFrame frame, int width, int height) {
+        // Create a label that will display the users name
         JLabel label = new JLabel("HELLO \n" + System.getProperty("user.name").toUpperCase(), SwingConstants.CENTER);
         label.setFont(new Font("Impact", Font.BOLD, 30));
 
@@ -18,14 +19,15 @@ public class UsernameScreen extends Screen {
 
         // Close the application when the window is closed
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        Random random = new Random();
 
+        // Set to a random position
+        Random random = new Random();
         frame.setLocation(random.nextInt(900), random.nextInt(600));
         // Make the window visible
         frame.setVisible(true);
     }
 
+    // Nothing to update
     @Override
     public void updateWindow() {}
  }
