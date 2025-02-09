@@ -1,4 +1,4 @@
-package Screens;
+package Main.Screens;
 
 import javax.swing.JFrame;
 

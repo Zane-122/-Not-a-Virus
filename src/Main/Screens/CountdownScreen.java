@@ -1,4 +1,4 @@
-package Screens;
+package Main.Screens;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,13 +8,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import Main.Constants;
+import Main.Window;
+
 public class CountdownScreen extends Screen{
     int initialTime;
     JLabel label;
     double startTime;
+
+    Window window;
+
     public CountdownScreen() {
         // Set the initial time that is desplayed in the begginging
-        initialTime = 255;
+        initialTime = 10;
 
         startTime = System.currentTimeMillis();
         label = new JLabel(String.valueOf(initialTime), SwingConstants.CENTER);
@@ -22,6 +28,7 @@ public class CountdownScreen extends Screen{
 
     @Override
     public void constructWindow(JFrame frame, int width, int height) {
+        label = new JLabel(String.valueOf(initialTime), SwingConstants.CENTER);
         label.setFont(new Font("Impact", Font.BOLD, 100));
 
         // Set size of the window
@@ -38,17 +45,24 @@ public class CountdownScreen extends Screen{
         frame.setVisible(true);
     }
 
-    // This will update the timer
-    public void updateWindow() {
-        // crete a timer that subtracts the current time by the starting time and gets it in seconds
-        int timer = (int) (initialTime - (System.currentTimeMillis() - startTime)/1000);
-        label.setText(String.valueOf(timer));
+   public void updateWindow() {
+        int timer = (int) (initialTime - (System.currentTimeMillis() - startTime) / 1000);
+        this.label.setText(String.valueOf(timer));
 
-        // Changes the color based on odd or even number
-        if (timer % 2 == 0) {
-            label.setForeground(Color.red);
-        } else {
-            label.setForeground(Color.black);
+        // Change color based on odd/even
+        this.label.setForeground(timer % 2 == 0 ? Color.RED : Color.BLACK);
+
+        if (timer <= 0) {
+            this.startTime = System.currentTimeMillis();
+            duplicate(); 
         }
+    }
+
+    public void duplicate() {
+        Constants.windowCounter += 1;
+        Window newWindow = new Window(300, 300, "WINDOW " + Constants.windowCounter, new CountdownScreen());
+
+        // Add to unconstructed windows so it's handled in the main loop
+        Constants.unconstructedWindows.add(newWindow);
     }
 }

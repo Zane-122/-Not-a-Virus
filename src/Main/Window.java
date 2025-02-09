@@ -1,8 +1,9 @@
+package Main;
 import java.awt.MouseInfo;
 
 import javax.swing.JFrame;
 
-import Screens.Screen;
+import Main.Screens.Screen;
 
 public class Window {
     // Dimensions
@@ -34,6 +35,10 @@ public class Window {
 
     // Contains everything that must run in main update loop
     public void updateWindow() {
+        if (!frame.isDisplayable()) {
+            Constants.constructedWindows.remove(Constants.constructedWindows.indexOf(this));
+        }
+            
         // Get mouse positions
         x = (int) MouseInfo.getPointerInfo().getLocation().getX();
         y = (int) MouseInfo.getPointerInfo().getLocation().getY();
