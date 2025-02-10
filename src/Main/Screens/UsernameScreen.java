@@ -1,12 +1,15 @@
-package Screens;
+package Main.Screens;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import Main.Window;
 import java.util.Random;
 
 public class UsernameScreen extends Screen {
+    Window window;
+
     @Override
     public void constructWindow(JFrame frame, int width, int height) {
         // Create a label that will display the users name
