@@ -1,5 +1,6 @@
 package Main;
 import java.awt.MouseInfo;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -19,11 +20,22 @@ public class Window {
     int x;
     int y;
 
+    // Get a random speed for the speedFactor
+    Random random = new Random();
+    double maxNumerator;
+    double minNumerator;
+    double randNumerator;
+
     public Window(int width, int height, String name, Screen screen) {
         this.width = width;
         this.height = height;
         this.name = name;
         this.screen = screen;
+
+        this.maxNumerator = 6;
+        this.minNumerator = 2;
+        this.randNumerator = random.nextDouble((maxNumerator - minNumerator) + 1) + minNumerator;
+        System.out.println(randNumerator);
 
         frame = new JFrame(name);
     }
@@ -51,20 +63,21 @@ public class Window {
 
     // Will move away from provided position
     public void moveAwayFrom(int x, int y, int maxSpeed) {
+        // get the current pos
         int thisX = frame.getX();
         int thisY = frame.getY();
         
         // Find the distance between x&y values of the two points
         int dx = thisX - x;
         int dy = thisY - y;
-        
+
         // Finding the distance between the two points on a 2d plane
         double distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < 1) return; // No 0 division
         
         // Make sure speed stays below max speed
-        double speedFactor = Math.min(maxSpeed, maxSpeed * (5.0 / distance));
+        double speedFactor = Math.min(maxSpeed, maxSpeed * (randNumerator / distance));
         
         // Find how much the x and y values of the window should move by
         int moveX = (int) (dx / distance * speedFactor);
